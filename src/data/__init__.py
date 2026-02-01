@@ -1,6 +1,7 @@
 """Data fetching and processing module for F1 information."""
 
 import fastf1
+import os
 from datetime import datetime, timezone
 from typing import Dict, List, Optional, Any
 import pandas as pd
@@ -12,6 +13,9 @@ class F1DataFetcher:
     
     def __init__(self):
         """Initialize the F1 data fetcher."""
+        # Create cache directory if it doesn't exist
+        os.makedirs(CACHE_DIRECTORY, exist_ok=True)
+        
         # Enable FastF1 cache for better performance
         fastf1.Cache.enable_cache(CACHE_DIRECTORY)
         
