@@ -1,3 +1,12 @@
+# Custom
+cache/*
+dashboard_data.json
+
+# Test outputs and generated files
+test_*.html
+TEST_RESULTS.md
+tests/test_*.html
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

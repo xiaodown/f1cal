@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <meta http-equiv="refresh" content="300"> <!-- Auto-refresh every 5 minutes -->
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Formula 1 Dashboard</h1>
+            <div class="last-updated">
+                Last updated: {{ last_updated.strftime('%Y-%m-%d %H:%M:%S') }}
+                {% if fetch_duration_minutes %}
+                <br><small>Fetch time: {{ fetch_duration_minutes }}min</small>
+                {% endif %}
+            </div>
+            <button id="fullscreen-btn" class="fullscreen-button" title="Toggle Fullscreen">⛶</button>
+        </header>
+
+        <main>
+            <!-- Next Event Section -->
+            {% if next_event %}
+            <section class="next-event">
+                <h2>Next Event</h2>
+                <div class="event-card">
+                    <h3>{{ next_event.name }}</h3>
+                    <div class="event-details">
+                        <div class="event-location">{{ next_event.location }}</div>
+                        <div class="event-date">{{ next_event.date }}</div>
+                        <div class="event-time">{{ next_event.time }}</div>
+                        <div class="event-type">{{ next_event.type }}</div>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+
+            <!-- Standings Section -->
+            {% if standings and (standings.drivers or standings.constructors) %}
+            <section class="standings" id="standings-section">
+                <div class="spoiler-overlay" id="spoiler-overlay">
+                    <div class="spoiler-text">
+                        <span>🏁 Tap to reveal standings</span>
+                        <small>Spoiler protection active</small>
+                    </div>
+                </div>
+                <div class="standings-grid">
+                    <!-- Driver Standings -->
+                    {% if standings.drivers %}
+                    <div class="driver-standings">
+                        <h3>Driver Standings</h3>
+                        {% for driver in standings.drivers[:3] %}
+                        <div class="standing-item">
+                            <span class="position">{{ loop.index }}</span>
+                            <span class="name">{{ driver.name }}</span>
+                            <span class="points">{{ driver.points }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <!-- Constructor Standings -->
+                    {% if standings.constructors %}
+                    <div class="constructor-standings">
+                        <h3>Constructor Standings</h3>
+                        {% for constructor in standings.constructors[:3] %}
+                        <div class="standing-item">
+                            <span class="position">{{ loop.index }}</span>
+                            <span class="name">{{ constructor.name }}</span>
+                            <span class="points">{{ constructor.points }}</span>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <!-- Hidden data for spoiler detection -->
+                <script type="application/json" id="standings-data">
+                    {
+                        "drivers": {{ standings.drivers[:3]|tojson|safe }},
+                        "constructors": {{ standings.constructors[:3]|tojson|safe }}
+                    }
+                </script>
+            </section>
+            {% else %}
+            <section class="standings no-data">
+                No championship standings yet<br>
+                <small>Standings will appear after the first race</small>
+            </section>
+            {% endif %}
+
+            <!-- Event After Next -->
+            {% if event_after_next %}
+            <section class="event-after-next">
+                <h2>Upcoming</h2>
+                <div class="event-card small">
+                    <h4>{{ event_after_next.name }}</h4>
+                    <div class="event-details">
+                        <span>{{ event_after_next.location }}</span>
+                        <span>{{ event_after_next.date }}</span>
+                    </div>
+                </div>
+            </section>
+            {% endif %}
+        </main>
+    </div>
+
+    <script>
+        // Fullscreen functionality
+        const fullscreenBtn = document.getElementById('fullscreen-btn');
+        
+        fullscreenBtn.addEventListener('click', function() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log('Error attempting to enable fullscreen:', err);
+                });
+            } else {
+                document.exitFullscreen();
+            }
+        });
+        
+        // Update button appearance based on fullscreen state
+        document.addEventListener('fullscreenchange', function() {
+            const btn = document.getElementById('fullscreen-btn');
+            if (document.fullscreenElement) {
+                btn.innerHTML = '⛉'; // Exit fullscreen icon
+                btn.title = 'Exit Fullscreen';
+            } else {
+                btn.innerHTML = '⛶'; // Enter fullscreen icon
+                btn.title = 'Toggle Fullscreen';
+            }
+        });
+
+        // Spoiler protection for standings
+        function initSpoilerProtection() {
+            const standingsSection = document.getElementById('standings-section');
+            const spoilerOverlay = document.getElementById('spoiler-overlay');
+            const standingsDataElement = document.getElementById('standings-data');
+            
+            if (!standingsSection || !spoilerOverlay || !standingsDataElement) {
+                return; // No standings to protect
+            }
+
+            // Get current standings data
+            const currentStandingsData = JSON.parse(standingsDataElement.textContent);
+            const currentDataHash = btoa(JSON.stringify(currentStandingsData)).substring(0, 16);
+            
+            // Storage keys
+            const REVEALED_KEY = 'f1_standings_revealed';
+            const DATA_HASH_KEY = 'f1_standings_hash';
+            
+            // Check if standings have changed since last time
+            const storedHash = localStorage.getItem(DATA_HASH_KEY);
+            const wasRevealed = localStorage.getItem(REVEALED_KEY) === 'true';
+            
+            const standingsChanged = storedHash && storedHash !== currentDataHash;
+            
+            // If standings changed, blur again (reset revealed state)
+            if (standingsChanged) {
+                localStorage.setItem(REVEALED_KEY, 'false');
+                console.log('Standings changed - activating spoiler protection');
+            }
+            
+            // Update stored hash
+            localStorage.setItem(DATA_HASH_KEY, currentDataHash);
+            
+            // Determine if we should show spoiler overlay
+            const shouldBlur = !wasRevealed || standingsChanged;
+            
+            if (shouldBlur) {
+                spoilerOverlay.style.display = 'flex';
+                standingsSection.classList.add('blurred');
+            } else {
+                spoilerOverlay.style.display = 'none';
+                standingsSection.classList.remove('blurred');
+            }
+            
+            // Click handler to reveal standings
+            standingsSection.addEventListener('click', function(e) {
+                if (spoilerOverlay.style.display !== 'none') {
+                    // Reveal standings
+                    spoilerOverlay.style.display = 'none';
+                    standingsSection.classList.remove('blurred');
+                    localStorage.setItem(REVEALED_KEY, 'true');
+                    
+                    console.log('Standings revealed!');
+                }
+            });
+            
+            // Touch support for mobile/Pi touchscreen
+            standingsSection.addEventListener('touchend', function(e) {
+                e.preventDefault(); // Prevent double-firing with click
+                if (spoilerOverlay.style.display !== 'none') {
+                    spoilerOverlay.style.display = 'none';
+                    standingsSection.classList.remove('blurred');
+                    localStorage.setItem(REVEALED_KEY, 'true');
+                    
+                    console.log('Standings revealed via touch!');
+                }
+            });
+        }
+        
+        // Initialize spoiler protection when page loads
+        document.addEventListener('DOMContentLoaded', initSpoilerProtection);
+    </script>
+</body>
+</html>

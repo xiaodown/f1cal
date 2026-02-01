@@ -1,0 +1,383 @@
+/* F1 Dashboard Styles - Optimized for visibility from 6 feet */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 30%, #2a1a1a 100%);
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+/* Static background elements */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(226, 0, 26, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 210, 190, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 135, 0, 0.05) 0%, transparent 50%);
+    opacity: 0.4;
+    z-index: 0;
+}
+
+.container {
+    max-width: 480px;
+    height: 320px;
+    margin: 0 auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, rgba(226, 0, 26, 0.2) 0%, rgba(226, 0, 26, 0.1) 100%);
+    border: 2px solid rgba(226, 0, 26, 0.3);
+    border-radius: 8px;
+    padding: 4px 8px;
+    box-shadow: 0 0 20px rgba(226, 0, 26, 0.3);
+    position: relative;
+}
+
+header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #E20020;
+    margin-bottom: 1px;
+    text-shadow: 0 0 10px rgba(226, 0, 26, 0.5);
+    letter-spacing: 1px;
+}
+
+.last-updated {
+    font-size: 9px;
+    color: #888;
+    font-weight: 300;
+}
+
+/* Fullscreen button */
+.fullscreen-button {
+    position: absolute;
+    top: 4px;
+    right: 8px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+    color: #ffffff;
+    font-size: 12px;
+    padding: 2px 4px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    min-width: 20px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.fullscreen-button:hover {
+    background: rgba(0, 210, 190, 0.3);
+    border-color: rgba(0, 210, 190, 0.5);
+    color: #00D2BE;
+    box-shadow: 0 0 8px rgba(0, 210, 190, 0.3);
+}
+
+.fullscreen-button:active {
+    transform: scale(0.95);
+}
+
+main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    overflow: hidden;
+}
+
+/* Next Event - Main focal point */
+.next-event {
+    background: linear-gradient(135deg, rgba(0, 210, 190, 0.25) 0%, rgba(0, 150, 255, 0.15) 100%);
+    border: 2px solid rgba(0, 210, 190, 0.4);
+    border-radius: 10px;
+    padding: 6px 8px;
+    box-shadow: 0 0 15px rgba(0, 210, 190, 0.2);
+    margin-bottom: 2px;
+}
+
+.next-event h2 {
+    font-size: 14px;
+    font-weight: 600;
+    color: #00D2BE;
+    margin-bottom: 3px;
+    text-shadow: 0 0 8px rgba(0, 210, 190, 0.4);
+    letter-spacing: 0.5px;
+}
+
+.event-card {
+    text-align: center;
+}
+
+.event-card h3 {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    line-height: 1.1;
+}
+
+.event-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    font-size: 11px;
+    font-weight: 500;
+}
+
+.event-location,
+.event-date {
+    color: #00D2BE;
+    font-weight: 600;
+    text-shadow: 0 0 5px rgba(0, 210, 190, 0.4);
+}
+
+.event-time,
+.event-type {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 12px;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+/* Standings Section */
+.standings {
+    flex: 1;
+    background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(50, 30, 30, 0.6) 100%);
+    border: 1px solid rgba(226, 0, 26, 0.3);
+    border-radius: 8px;
+    padding: 4px 6px;
+    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    position: relative;
+    cursor: pointer;
+    transition: filter 0.3s ease;
+}
+
+/* Spoiler protection */
+.standings.blurred .standings-grid {
+    filter: blur(8px);
+    pointer-events: none;
+}
+
+.spoiler-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    z-index: 10;
+    transition: opacity 0.3s ease;
+}
+
+.spoiler-overlay:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.spoiler-text {
+    text-align: center;
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.spoiler-text span {
+    font-size: 14px;
+    display: block;
+    margin-bottom: 2px;
+}
+
+.spoiler-text small {
+    font-size: 9px;
+    color: #cccccc;
+    font-weight: 400;
+}
+
+.standings-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
+    height: 100%;
+}
+
+.driver-standings,
+.constructor-standings {
+    display: flex;
+    flex-direction: column;
+}
+
+.driver-standings h3,
+.constructor-standings h3 {
+    font-size: 12px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    text-align: center;
+    letter-spacing: 0.5px;
+}
+
+.driver-standings h3 {
+    color: #FFD700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+}
+
+.constructor-standings h3 {
+    color: #FF8700;
+    text-shadow: 0 0 8px rgba(255, 135, 0, 0.5);
+}
+
+.standing-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1px;
+    padding: 2px 3px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    min-height: 20px;
+}
+
+.standing-item:nth-child(2) { /* 1st place */
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
+    border-color: rgba(255, 215, 0, 0.4);
+}
+
+.standing-item:nth-child(3) { /* 2nd place */
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
+    border-color: rgba(192, 192, 192, 0.4);
+}
+
+.standing-item:nth-child(4) { /* 3rd place */
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
+    border-color: rgba(205, 127, 50, 0.4);
+}
+
+.position {
+    font-size: 12px;
+    font-weight: 700;
+    color: #ffffff;
+    width: 15px;
+    text-align: center;
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+}
+
+.name {
+    flex: 1;
+    font-size: 9px;
+    font-weight: 600;
+    color: #ffffff;
+    margin: 0 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.points {
+    font-size: 11px;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+}
+
+/* No data state */
+.no-data {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background: rgba(50, 50, 50, 0.6);
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #cccccc;
+}
+
+.no-data small {
+    font-size: 10px;
+    color: #888;
+    margin-top: 3px;
+}
+
+/* Event after next - smaller info */
+.event-after-next {
+    background: rgba(80, 80, 80, 0.4);
+    border: 1px solid rgba(128, 128, 128, 0.3);
+    border-radius: 6px;
+    padding: 3px 5px;
+    margin-top: 2px;
+}
+
+.event-after-next h2 {
+    font-size: 10px;
+    color: #aaaaaa;
+    margin-bottom: 2px;
+    text-align: center;
+    font-weight: 500;
+}
+
+.event-card.small h4 {
+    font-size: 11px;
+    font-weight: 600;
+    color: #ffffff;
+    text-align: center;
+    margin-bottom: 1px;
+}
+
+.event-card.small .event-details {
+    display: flex;
+    justify-content: space-around;
+    font-size: 8px;
+    color: #cccccc;
+}
+
+/* Responsive adjustments for small screen */
+@media (max-width: 500px) {
+    .container {
+        padding: 6px;
+    }
+    
+    .event-card h3 {
+        font-size: 18px;
+    }
+    
+    .event-details {
+        font-size: 10px;
+    }
+    
+    .name {
+        font-size: 8px;
+    }
+}

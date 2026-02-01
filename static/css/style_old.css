@@ -1,0 +1,226 @@
+/* F1 Dashboard Styles - Optimized for visibility from 6 feet */
+
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Rajdhani', 'Arial', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 30%, #2a1a1a 100%);
+    color: #ffffff;
+    overflow: hidden;
+    height: 100vh;
+    position: relative;
+}
+
+/* Animated background elements for pizzazz */
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: 
+        radial-gradient(circle at 20% 50%, rgba(226, 0, 26, 0.1) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 210, 190, 0.08) 0%, transparent 50%),
+        radial-gradient(circle at 40% 80%, rgba(255, 135, 0, 0.05) 0%, transparent 50%);
+    animation: pulse 8s ease-in-out infinite;
+    z-index: 0;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+.container {
+    max-width: 480px;
+    height: 320px;
+    margin: 0 auto;
+    padding: 8px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 1;
+}
+
+header {
+    text-align: center;
+    margin-bottom: 6px;
+    background: linear-gradient(135deg, rgba(226, 0, 26, 0.2) 0%, rgba(226, 0, 26, 0.1) 100%);
+    border: 2px solid rgba(226, 0, 26, 0.3);
+    border-radius: 8px;
+    padding: 4px 8px;
+    box-shadow: 0 0 20px rgba(226, 0, 26, 0.3);
+}
+
+header h1 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #E20020;
+    margin-bottom: 1px;
+    text-shadow: 0 0 10px rgba(226, 0, 26, 0.5);
+    letter-spacing: 1px;
+}
+
+.last-updated {
+    font-size: 9px;
+    color: #888;
+    font-weight: 300;
+}
+
+main {
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 5px;
+    overflow: hidden;
+}
+
+/* Next Event - spans top row */
+.next-event {
+    grid-column: 1 / -1;
+    background: rgba(0, 122, 204, 0.2);
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.next-event h2 {
+    font-size: 12px;
+    color: #00AAFF;
+    margin-bottom: 3px;
+}
+
+.event-card h3 {
+    font-size: 11px;
+    margin-bottom: 3px;
+    color: #ffffff;
+}
+
+.event-details {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3px;
+    font-size: 9px;
+}
+
+.event-location, .event-date {
+    font-weight: bold;
+}
+
+.event-type {
+    grid-column: 1 / -1;
+    text-align: center;
+    background: rgba(226, 0, 26, 0.3);
+    border-radius: 3px;
+    padding: 1px;
+}
+
+/* Standings */
+.standings {
+    grid-column: 1 / -1;
+    display: flex;
+    gap: 5px;
+}
+
+.standings.no-data {
+    background: rgba(158, 158, 158, 0.2);
+    border-radius: 5px;
+    padding: 8px;
+    text-align: center;
+    font-style: italic;
+    color: #cccccc;
+    font-size: 10px;
+}
+
+.driver-standings, .constructor-standings {
+    flex: 1;
+    background: rgba(46, 125, 50, 0.2);
+    border-radius: 5px;
+    padding: 4px;
+}
+
+.driver-standings h3, .constructor-standings h3 {
+    font-size: 10px;
+    color: #4CAF50;
+    margin-bottom: 3px;
+    text-align: center;
+}
+
+.standing-item {
+    display: grid;
+    grid-template-columns: 15px 1fr 25px;
+    gap: 2px;
+    font-size: 8px;
+    margin-bottom: 2px;
+    padding: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 2px;
+}
+
+.position {
+    font-weight: bold;
+    color: #FFD700;
+    text-align: center;
+}
+
+.name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.points {
+    text-align: right;
+    font-weight: bold;
+}
+
+/* Event After Next */
+.event-after-next {
+    grid-column: 1 / -1;
+    background: rgba(156, 39, 176, 0.2);
+    border-radius: 5px;
+    padding: 4px;
+    text-align: center;
+}
+
+.event-after-next h2 {
+    font-size: 10px;
+    color: #AB47BC;
+    margin-bottom: 2px;
+}
+
+.event-card.small h4 {
+    font-size: 9px;
+    margin-bottom: 2px;
+}
+
+.event-card.small .event-details {
+    display: flex;
+    justify-content: space-between;
+    font-size: 8px;
+}
+
+/* Responsive adjustments for even smaller screens */
+@media (max-width: 400px) {
+    body {
+        font-size: 10px;
+    }
+    
+    header h1 {
+        font-size: 14px;
+    }
+    
+    .container {
+        height: 280px;
+    }
+}
