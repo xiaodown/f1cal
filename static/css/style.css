@@ -68,9 +68,9 @@ header h1 {
 }
 
 .last-updated {
-    font-size: 9px;
-    color: #888;
-    font-weight: 300;
+    font-size: 11px;
+    color: #cccccc;
+    font-weight: 500;
 }
 
 /* Fullscreen button */
