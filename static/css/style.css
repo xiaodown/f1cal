@@ -15,8 +15,9 @@ body {
     line-height: 1.1;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 30%, #2a1a1a 100%);
     color: #ffffff;
-    overflow: hidden;
-    height: 100vh;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
 }
 
 /* Static background elements */
@@ -36,11 +37,13 @@ body::before {
 }
 
 .container {
-    width: 100%;
-    height: 100vh;
-    padding: 8px;
+    max-width: 1200px;
+    min-height: calc(100vh - 40px); /* Use viewport height minus padding */
+    margin: 0 auto;
+    padding: 20px;
     display: flex;
     flex-direction: column;
+    justify-content: space-between; /* Distribute sections evenly */
 }
 
 /* Header - compact but clear */
@@ -114,11 +117,12 @@ main {
     border-radius: 12px;
     padding: 20px 16px;
     text-align: center;
-    flex: 0 0 45%; /* Take up 45% of available space - much larger than before */
+    flex: 0 0 auto; /* Don't grow, but allow natural size */
     display: flex;
     flex-direction: column;
     justify-content: center;
     box-shadow: 0 0 25px rgba(0, 210, 190, 0.3);
+    margin-bottom: 20px;
 }
 
 .next-event h2 {
@@ -130,24 +134,26 @@ main {
     letter-spacing: 1px;
 }
 
-/* Make the race name smaller to emphasize the date */
+/* Make the race name larger to better use horizontal space */
 .event-card h3 {
-    font-size: 36px;
+    font-size: 64px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 15px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
-    line-height: 1.0;
+    margin-bottom: 8px;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+    line-height: 0.9;
+    letter-spacing: 1px;
 }
 
 /* Style for event type when it's combined with the event name */
 .event-type-inline {
-    font-size: 24px;
+    font-size: 36px;
     color: #E20020;
-    font-weight: 600;
-    text-shadow: 0 0 8px rgba(226, 0, 26, 0.6);
+    font-weight: 700;
+    text-shadow: 0 0 12px rgba(226, 0, 26, 0.8);
     display: block;
-    margin-top: 4px;
+    margin-top: 8px;
+    letter-spacing: 1px;
 }
 
 /* Reorganize event details to make date the star */
@@ -212,9 +218,9 @@ main {
     display: none;
 }
 
-/* Standings Section - reduced size to make room for larger next event */
+/* Standings Section - flexible size */
 .standings {
-    flex: 0 0 35%; /* Reduced from taking remaining space to fixed 35% */
+    flex: 1; /* Take remaining space */
     background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(50, 30, 30, 0.6) 100%);
     border: 2px solid rgba(226, 0, 26, 0.4);
     border-radius: 8px;
@@ -223,6 +229,7 @@ main {
     cursor: pointer;
     transition: filter 0.3s ease;
     overflow: hidden;
+    margin-bottom: 20px;
 }
 
 .standings.blurred .standings-grid {
