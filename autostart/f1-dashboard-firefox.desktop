@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=F1 Dashboard Browser (Firefox)
+Comment=Auto-start Firefox for F1 Dashboard
+Exec=sh -c 'sleep 10 && firefox --kiosk http://localhost:5000'
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true

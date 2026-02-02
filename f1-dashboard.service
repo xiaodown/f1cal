@@ -1,0 +1,17 @@
+[Unit]
+Description=F1 Dashboard Flask Server
+After=network.target
+Wants=network.target
+
+[Service]
+Type=simple
+User=xiaodown
+Group=xiaodown
+WorkingDirectory=/home/xiaodown/code/f1cal
+ExecStart=/usr/bin/python3 /home/xiaodown/code/f1cal/app.py
+Restart=always
+RestartSec=5
+Environment=PYTHONUNBUFFERED=1
+
+[Install]
+WantedBy=multi-user.target

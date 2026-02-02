@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=F1 Dashboard Browser
+Comment=Auto-start browser for F1 Dashboard
+Exec=sh -c 'sleep 10 && chromium-browser --start-fullscreen --disable-infobars --disable-session-crashed-bubble --disable-restore-session-state --no-first-run --noerrdialogs --kiosk http://localhost:5000'
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
