@@ -11,9 +11,6 @@
     <div class="container">
         <header>
             <h1>Formula 1 Dashboard</h1>
-            <div class="last-updated">
-                <strong>Last updated: <span id="last-updated-time">{{ last_updated.strftime('%Y-%m-%d %H:%M:%S') if last_updated else 'Loading...' }}</span></strong>
-            </div>
             <button id="fullscreen-btn" class="fullscreen-button" title="Toggle Fullscreen">⛶</button>
         </header>
 
@@ -107,6 +104,9 @@
                         <span id="upcoming-event-location">{{ event_after_next.location }}</span>
                         <span id="upcoming-event-date">{{ event_after_next.date }}</span>
                     </div>
+                </div>
+                <div class="last-updated-bottom">
+                    <strong>Last updated: {{ last_updated.strftime('%Y-%m-%d %H:%M:%S') if last_updated else 'Loading...' }}</strong>
                 </div>
             </section>
             {% endif %}

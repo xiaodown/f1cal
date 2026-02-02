@@ -17,7 +17,8 @@ body {
     color: #ffffff;
     margin: 0;
     padding: 0;
-    min-height: 100vh;
+    height: 100vh;
+    overflow: hidden; /* Prevent any scrollbars */
 }
 
 /* Static background elements */
@@ -38,42 +39,49 @@ body::before {
 
 .container {
     max-width: 1200px;
-    min-height: calc(100vh - 40px); /* Use viewport height minus padding */
+    height: 100vh; /* Use exact viewport height */
     margin: 0 auto;
-    padding: 20px;
+    padding: 15px 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Distribute sections evenly */
+    justify-content: space-between;
+    overflow: hidden; /* Prevent internal scrolling */
 }
 
 /* Header - compact but clear */
 header {
     text-align: center;
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     background: linear-gradient(135deg, rgba(226, 0, 26, 0.2) 0%, rgba(226, 0, 26, 0.1) 100%);
     border: 2px solid rgba(226, 0, 26, 0.4);
     border-radius: 6px;
-    padding: 5px 8px;
+    padding: 8px 8px;
     position: relative;
-    height: 80px;
+    height: 70px; /* Reduced from 80px */
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 header h1 {
-    font-size: 48px;
+    font-size: 52px; /* Increased from 48px */
     font-weight: 700;
     color: #E20020;
     text-shadow: 0 0 15px rgba(226, 0, 26, 0.6);
-    letter-spacing: 2px;
-    margin-bottom: 2px;
+    letter-spacing: 3px; /* Increased for wider appearance */
+    margin: 0;
+    line-height: 1.0;
 }
 
-.last-updated {
-    font-size: 18px;
+/* Last updated at bottom */
+.last-updated-bottom {
+    font-size: 12px;
     color: #cccccc;
-    font-weight: 600;
+    font-weight: 500;
+    text-align: center;
+    margin-top: 8px;
+    padding-top: 5px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
 }
 
 .fullscreen-button {
@@ -107,7 +115,7 @@ main {
     flex-direction: column;
     gap: 6px;
     overflow: hidden;
-    height: calc(100vh - 96px);
+    min-height: 0; /* Allow shrinking */
 }
 
 /* Next Event - HERO SECTION - Make this much larger and date-focused */
