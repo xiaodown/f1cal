@@ -1,6 +1,6 @@
 /* F1 Dashboard Styles - Optimized for visibility from 6 feet */
 
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&display=swap');
 
 * {
     margin: 0;
@@ -10,14 +10,13 @@
 
 body {
     font-family: 'Rajdhani', 'Arial', sans-serif;
-    font-size: 18px;
-    font-weight: 500;
-    line-height: 1.2;
+    font-size: 32px;
+    font-weight: 600;
+    line-height: 1.1;
     background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 30%, #2a1a1a 100%);
     color: #ffffff;
     overflow: hidden;
     height: 100vh;
-    position: relative;
 }
 
 /* Static background elements */
@@ -37,152 +36,197 @@ body::before {
 }
 
 .container {
-    max-width: 480px;
-    height: 320px;
-    margin: 0 auto;
+    width: 100%;
+    height: 100vh;
     padding: 8px;
     display: flex;
     flex-direction: column;
-    position: relative;
-    z-index: 1;
 }
 
+/* Header - compact but clear */
 header {
     text-align: center;
-    margin-bottom: 6px;
+    margin-bottom: 8px;
     background: linear-gradient(135deg, rgba(226, 0, 26, 0.2) 0%, rgba(226, 0, 26, 0.1) 100%);
-    border: 2px solid rgba(226, 0, 26, 0.3);
-    border-radius: 8px;
-    padding: 4px 8px;
-    box-shadow: 0 0 20px rgba(226, 0, 26, 0.3);
+    border: 2px solid rgba(226, 0, 26, 0.4);
+    border-radius: 6px;
+    padding: 5px 8px;
     position: relative;
+    height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 header h1 {
-    font-size: 22px;
+    font-size: 48px;
     font-weight: 700;
     color: #E20020;
-    margin-bottom: 1px;
-    text-shadow: 0 0 10px rgba(226, 0, 26, 0.5);
-    letter-spacing: 1px;
+    text-shadow: 0 0 15px rgba(226, 0, 26, 0.6);
+    letter-spacing: 2px;
+    margin-bottom: 2px;
 }
 
 .last-updated {
-    font-size: 11px;
+    font-size: 18px;
     color: #cccccc;
-    font-weight: 500;
+    font-weight: 600;
 }
 
-/* Fullscreen button */
 .fullscreen-button {
     position: absolute;
-    top: 4px;
-    right: 8px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 4px;
+    top: 8px;
+    right: 12px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
     color: #ffffff;
-    font-size: 12px;
-    padding: 2px 4px;
+    font-size: 24px;
+    padding: 6px 10px;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-width: 20px;
-    height: 18px;
+    min-width: 45px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .fullscreen-button:hover {
-    background: rgba(0, 210, 190, 0.3);
-    border-color: rgba(0, 210, 190, 0.5);
+    background: rgba(0, 210, 190, 0.4);
+    border-color: rgba(0, 210, 190, 0.6);
     color: #00D2BE;
-    box-shadow: 0 0 8px rgba(0, 210, 190, 0.3);
-}
-
-.fullscreen-button:active {
-    transform: scale(0.95);
 }
 
 main {
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     overflow: hidden;
+    height: calc(100vh - 96px);
 }
 
-/* Next Event - Main focal point */
+/* Next Event - HERO SECTION - Make this much larger and date-focused */
 .next-event {
-    background: linear-gradient(135deg, rgba(0, 210, 190, 0.25) 0%, rgba(0, 150, 255, 0.15) 100%);
-    border: 2px solid rgba(0, 210, 190, 0.4);
-    border-radius: 10px;
-    padding: 6px 8px;
-    box-shadow: 0 0 15px rgba(0, 210, 190, 0.2);
-    margin-bottom: 2px;
+    background: linear-gradient(135deg, rgba(0, 210, 190, 0.3) 0%, rgba(0, 150, 255, 0.2) 100%);
+    border: 3px solid rgba(0, 210, 190, 0.7);
+    border-radius: 12px;
+    padding: 20px 16px;
+    text-align: center;
+    flex: 0 0 45%; /* Take up 45% of available space - much larger than before */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    box-shadow: 0 0 25px rgba(0, 210, 190, 0.3);
 }
 
 .next-event h2 {
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 32px;
+    font-weight: 700;
     color: #00D2BE;
-    margin-bottom: 3px;
-    text-shadow: 0 0 8px rgba(0, 210, 190, 0.4);
-    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+    text-shadow: 0 0 12px rgba(0, 210, 190, 0.6);
+    letter-spacing: 1px;
 }
 
-.event-card {
-    text-align: center;
-}
-
+/* Make the race name smaller to emphasize the date */
 .event-card h3 {
-    font-size: 20px;
+    font-size: 36px;
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 2px;
-    text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
-    line-height: 1.1;
+    margin-bottom: 15px;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+    line-height: 1.0;
 }
 
+/* Style for event type when it's combined with the event name */
+.event-type-inline {
+    font-size: 24px;
+    color: #E20020;
+    font-weight: 600;
+    text-shadow: 0 0 8px rgba(226, 0, 26, 0.6);
+    display: block;
+    margin-top: 4px;
+}
+
+/* Reorganize event details to make date the star */
 .event-details {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+/* THE DATE - Make this absolutely massive and the focal point */
+.event-date {
+    font-size: 78px !important;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
+    letter-spacing: 3px;
+    margin: 10px 0;
+    background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-transform: uppercase;
+    order: 1;
+}
+
+/* Secondary info - now only location and time, so we can make them bigger */
+.event-secondary-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px;
-    font-size: 11px;
-    font-weight: 500;
-}
-
-.event-location,
-.event-date {
-    color: #00D2BE;
+    gap: 15px;
+    width: 100%;
+    font-size: 32px; /* Increased from 24px since we have more space */
     font-weight: 600;
-    text-shadow: 0 0 5px rgba(0, 210, 190, 0.4);
+    order: 2;
 }
 
-.event-time,
-.event-type {
-    color: #FFD700;
+.event-location {
+    color: #00D2BE;
+    text-shadow: 0 0 10px rgba(0, 210, 190, 0.5);
     font-weight: 700;
-    font-size: 12px;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    text-align: center;
+    padding: 8px;
+    background: rgba(0, 210, 190, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(0, 210, 190, 0.3);
 }
 
-/* Standings Section */
+.event-time {
+    color: #FF8700;
+    text-shadow: 0 0 10px rgba(255, 135, 0, 0.6);
+    font-weight: 700;
+    text-align: center;
+    padding: 8px;
+    background: rgba(255, 135, 0, 0.1);
+    border-radius: 6px;
+    border: 1px solid rgba(255, 135, 0, 0.3);
+}
+
+/* Remove the standalone event-type since it's now inline with the event name */
+.event-type {
+    display: none;
+}
+
+/* Standings Section - reduced size to make room for larger next event */
 .standings {
-    flex: 1;
+    flex: 0 0 35%; /* Reduced from taking remaining space to fixed 35% */
     background: linear-gradient(135deg, rgba(30, 30, 30, 0.8) 0%, rgba(50, 30, 30, 0.6) 100%);
-    border: 1px solid rgba(226, 0, 26, 0.3);
+    border: 2px solid rgba(226, 0, 26, 0.4);
     border-radius: 8px;
-    padding: 4px 6px;
-    box-shadow: 0 0 12px rgba(0, 0, 0, 0.4);
+    padding: 6px 8px;
     position: relative;
     cursor: pointer;
     transition: filter 0.3s ease;
+    overflow: hidden;
 }
 
-/* Spoiler protection */
 .standings.blurred .standings-grid {
-    filter: blur(8px);
+    filter: blur(12px);
     pointer-events: none;
 }
 
@@ -192,7 +236,7 @@ main {
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0, 0, 0, 0.7);
+    background: rgba(0, 0, 0, 0.75);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -202,26 +246,22 @@ main {
     transition: opacity 0.3s ease;
 }
 
-.spoiler-overlay:hover {
-    background: rgba(0, 0, 0, 0.8);
-}
-
 .spoiler-text {
     text-align: center;
     color: #ffffff;
-    font-weight: 600;
+    font-weight: 700;
 }
 
 .spoiler-text span {
-    font-size: 14px;
+    font-size: 36px;
     display: block;
-    margin-bottom: 2px;
+    margin-bottom: 6px;
 }
 
 .spoiler-text small {
-    font-size: 9px;
+    font-size: 20px;
     color: #cccccc;
-    font-weight: 400;
+    font-weight: 600;
 }
 
 .standings-grid {
@@ -239,74 +279,74 @@ main {
 
 .driver-standings h3,
 .constructor-standings h3 {
-    font-size: 12px;
-    font-weight: 600;
-    margin-bottom: 2px;
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 3px;
     text-align: center;
-    letter-spacing: 0.5px;
+    letter-spacing: 1px;
 }
 
 .driver-standings h3 {
     color: #FFD700;
-    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
 
 .constructor-standings h3 {
     color: #FF8700;
-    text-shadow: 0 0 8px rgba(255, 135, 0, 0.5);
+    text-shadow: 0 0 8px rgba(255, 135, 0, 0.6);
 }
 
 .standing-item {
     display: flex;
     align-items: center;
     margin-bottom: 1px;
-    padding: 2px 3px;
-    border-radius: 4px;
-    background: rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    min-height: 20px;
+    padding: 3px 5px;
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-height: 28px;
 }
 
 .standing-item:nth-child(2) { /* 1st place */
-    background: linear-gradient(90deg, rgba(255, 215, 0, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
-    border-color: rgba(255, 215, 0, 0.4);
+    background: linear-gradient(90deg, rgba(255, 215, 0, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+    border-color: rgba(255, 215, 0, 0.5);
 }
 
 .standing-item:nth-child(3) { /* 2nd place */
-    background: linear-gradient(90deg, rgba(192, 192, 192, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
-    border-color: rgba(192, 192, 192, 0.4);
+    background: linear-gradient(90deg, rgba(192, 192, 192, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+    border-color: rgba(192, 192, 192, 0.5);
 }
 
 .standing-item:nth-child(4) { /* 3rd place */
-    background: linear-gradient(90deg, rgba(205, 127, 50, 0.3) 0%, rgba(0, 0, 0, 0.3) 100%);
-    border-color: rgba(205, 127, 50, 0.4);
+    background: linear-gradient(90deg, rgba(205, 127, 50, 0.4) 0%, rgba(0, 0, 0, 0.4) 100%);
+    border-color: rgba(205, 127, 50, 0.5);
 }
 
 .position {
-    font-size: 12px;
+    font-size: 22px;
     font-weight: 700;
     color: #ffffff;
-    width: 15px;
+    width: 25px;
     text-align: center;
-    text-shadow: 0 0 6px rgba(255, 255, 255, 0.5);
+    text-shadow: 0 0 6px rgba(255, 255, 255, 0.6);
 }
 
 .name {
     flex: 1;
-    font-size: 9px;
-    font-weight: 600;
+    font-size: 18px;
+    font-weight: 700;
     color: #ffffff;
-    margin: 0 2px;
+    margin: 0 3px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
 .points {
-    font-size: 11px;
+    font-size: 20px;
     font-weight: 700;
     color: #FFD700;
-    text-shadow: 0 0 6px rgba(255, 215, 0, 0.5);
+    text-shadow: 0 0 6px rgba(255, 215, 0, 0.6);
 }
 
 /* No data state */
@@ -317,67 +357,253 @@ main {
     align-items: center;
     text-align: center;
     background: rgba(50, 50, 50, 0.6);
-    border: 1px solid rgba(128, 128, 128, 0.3);
+    border: 2px solid rgba(128, 128, 128, 0.4);
     border-radius: 8px;
-    padding: 10px;
-    font-size: 14px;
-    font-weight: 500;
+    padding: 12px;
+    font-size: 28px;
+    font-weight: 700;
     color: #cccccc;
 }
 
 .no-data small {
-    font-size: 10px;
+    font-size: 22px;
     color: #888;
-    margin-top: 3px;
+    margin-top: 6px;
+    font-weight: 600;
 }
 
-/* Event after next - smaller info */
+/* Event after next - better horizontal layout */
 .event-after-next {
-    background: rgba(80, 80, 80, 0.4);
-    border: 1px solid rgba(128, 128, 128, 0.3);
+    background: rgba(80, 80, 80, 0.5);
+    border: 1px solid rgba(128, 128, 128, 0.4);
     border-radius: 6px;
-    padding: 3px 5px;
-    margin-top: 2px;
+    padding: 8px 16px;
+    flex: 0 0 auto;
+    min-height: 80px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .event-after-next h2 {
-    font-size: 10px;
+    font-size: 20px;
     color: #aaaaaa;
-    margin-bottom: 2px;
-    text-align: center;
-    font-weight: 500;
+    margin-bottom: 6px;
+    text-align: left;
+    font-weight: 700;
+}
+
+.event-card.small {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    align-items: center;
 }
 
 .event-card.small h4 {
-    font-size: 11px;
-    font-weight: 600;
+    font-size: 28px;
+    font-weight: 700;
     color: #ffffff;
-    text-align: center;
-    margin-bottom: 1px;
+    margin: 0;
+    text-align: left;
+    line-height: 1.1;
 }
 
 .event-card.small .event-details {
-    display: flex;
-    justify-content: space-around;
-    font-size: 8px;
-    color: #cccccc;
+    display: contents; /* This makes the spans act as direct grid items */
 }
 
-/* Responsive adjustments for small screen */
+.event-card.small .event-details span {
+    padding: 6px 12px;
+    border-radius: 6px;
+    white-space: nowrap;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Location styling */
+.event-card.small .event-details span:first-child {
+    font-size: 22px;
+    color: #00D2BE;
+    background: rgba(0, 210, 190, 0.15);
+    border: 1px solid rgba(0, 210, 190, 0.4);
+    text-shadow: 0 0 8px rgba(0, 210, 190, 0.5);
+}
+
+/* Date styling - make it prominent */
+.event-card.small .event-details span:last-child {
+    font-size: 26px;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+    background: rgba(255, 215, 0, 0.2);
+    border: 1px solid rgba(255, 215, 0, 0.5);
+}
+
+/* Fullscreen optimizations - MASSIVE date emphasis */
+body:fullscreen,
+body:-webkit-full-screen,
+body:-moz-full-screen {
+    font-size: 36px;
+}
+
+body:fullscreen header h1,
+body:-webkit-full-screen header h1,
+body:-moz-full-screen header h1 {
+    font-size: 56px;
+}
+
+body:fullscreen .last-updated,
+body:-webkit-full-screen .last-updated,
+body:-moz-full-screen .last-updated {
+    font-size: 22px;
+}
+
+body:fullscreen .next-event h2,
+body:-webkit-full-screen .next-event h2,
+body:-moz-full-screen .next-event h2 {
+    font-size: 38px;
+}
+
+body:fullscreen .event-card h3,
+body:-webkit-full-screen .event-card h3,
+body:-moz-full-screen .event-card h3 {
+    font-size: 44px;
+}
+
+/* Fullscreen styling for inline event type */
+body:fullscreen .event-type-inline,
+body:-webkit-full-screen .event-type-inline,
+body:-moz-full-screen .event-type-inline {
+    font-size: 28px;
+}
+
+/* THE BIG CHANGE - Massive date in fullscreen */
+body:fullscreen .event-date,
+body:-webkit-full-screen .event-date,
+body:-moz-full-screen .event-date {
+    font-size: 110px !important;
+    letter-spacing: 4px;
+    margin: 15px 0;
+}
+
+body:fullscreen .event-secondary-info,
+body:-webkit-full-screen .event-secondary-info,
+body:-moz-full-screen .event-secondary-info {
+    font-size: 38px; /* Increased from 28px */
+}
+
+body:fullscreen .driver-standings h3,
+body:fullscreen .constructor-standings h3,
+body:-webkit-full-screen .driver-standings h3,
+body:-webkit-full-screen .constructor-standings h3,
+body:-moz-full-screen .driver-standings h3,
+body:-moz-full-screen .constructor-standings h3 {
+    font-size: 30px;
+}
+
+body:fullscreen .position,
+body:-webkit-full-screen .position,
+body:-moz-full-screen .position {
+    font-size: 26px;
+}
+
+body:fullscreen .name,
+body:-webkit-full-screen .name,
+body:-moz-full-screen .name {
+    font-size: 22px;
+}
+
+body:fullscreen .points,
+body:-webkit-full-screen .points,
+body:-moz-full-screen .points {
+    font-size: 24px;
+}
+
+body:fullscreen .spoiler-text span,
+body:-webkit-full-screen .spoiler-text span,
+body:-moz-full-screen .spoiler-text span {
+    font-size: 42px;
+}
+
+body:fullscreen .spoiler-text small,
+body:-webkit-full-screen .spoiler-text small,
+body:-moz-full-screen .spoiler-text small {
+    font-size: 24px;
+}
+
+body:fullscreen .no-data,
+body:-webkit-full-screen .no-data,
+body:-moz-full-screen .no-data {
+    font-size: 32px;
+}
+
+body:fullscreen .no-data small,
+body:-webkit-full-screen .no-data small,
+body:-moz-full-screen .no-data small {
+    font-size: 26px;
+}
+
+body:fullscreen .event-after-next h2,
+body:-webkit-full-screen .event-after-next h2,
+body:-moz-full-screen .event-after-next h2 {
+    font-size: 22px;
+}
+
+body:fullscreen .event-card.small h4,
+body:-webkit-full-screen .event-card.small h4,
+body:-moz-full-screen .event-card.small h4 {
+    font-size: 28px;
+}
+
+body:fullscreen .event-card.small .event-details,
+body:-webkit-full-screen .event-card.small .event-details,
+body:-moz-full-screen .event-card.small .event-details {
+    font-size: 24px;
+    gap: 25px;
+}
+
+/* Make the date even larger in fullscreen for upcoming event */
+body:fullscreen .event-card.small .event-details span:last-child,
+body:-webkit-full-screen .event-card.small .event-details span:last-child,
+body:-moz-full-screen .event-card.small .event-details span:last-child {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FFD700;
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
+}
+
+body:fullscreen .event-card.small .event-details span:first-child,
+body:-webkit-full-screen .event-card.small .event-details span:first-child,
+body:-moz-full-screen .event-card.small .event-details span:first-child {
+    font-size: 24px;
+}
+
+/* Touch-friendly interactions */
+@media (pointer: coarse) {
+    .fullscreen-button {
+        min-width: 55px;
+        height: 50px;
+        font-size: 28px;
+    }
+}
+
+/* Responsive adjustments for small screens */
 @media (max-width: 500px) {
     .container {
-        padding: 6px;
+        padding: 4px;
     }
     
-    .event-card h3 {
-        font-size: 18px;
+    header h1 {
+        font-size: 40px;
     }
     
-    .event-details {
-        font-size: 10px;
+    .event-date {
+        font-size: 60px !important;
     }
     
     .name {
-        font-size: 8px;
+        font-size: 16px;
     }
 }

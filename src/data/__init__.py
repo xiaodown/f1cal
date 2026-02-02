@@ -2,7 +2,7 @@
 
 import fastf1
 import os
-from datetime import datetime, timezone
+from datetime import datetime
 from typing import Dict, List, Optional, Any
 import pandas as pd
 from config.settings import CACHE_DIRECTORY

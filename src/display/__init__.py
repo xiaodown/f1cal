@@ -1,10 +1,9 @@
 """Display module for rendering F1 dashboard."""
 
 from abc import ABC, abstractmethod
-from typing import Dict, List, Any
+from typing import Any
 from flask import Flask, render_template, jsonify
-import threading
-import time
+from datetime import datetime
 
 
 class DisplayBase(ABC):
@@ -33,11 +32,26 @@ class WebDisplay(DisplayBase):
         @self.app.route('/')
         def dashboard():
             dashboard_data = self.data_cache.get_data()
+            # Add last_updated timestamp for the template
+            dashboard_data['last_updated'] = datetime.now()
             return render_template('dashboard.html', **dashboard_data)
         
         @self.app.route('/api/data')
         def api_data():
             return jsonify(self.data_cache.get_data())
+        
+        @self.app.route('/api/dashboard-data')
+        def api_dashboard_data():
+            """API endpoint for refresh - formats data for JavaScript"""
+            data = self.data_cache.get_data()
+            
+            # Format the data to match what the JavaScript expects
+            return jsonify({
+                'next_event': data.get('next_event'),
+                'event_after_next': data.get('event_after_next'),
+                'standings': data.get('standings'),
+                'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+            })
         
         @self.app.route('/api/status')
         def api_status():
@@ -57,6 +71,7 @@ class WebDisplay(DisplayBase):
         print("Available endpoints:")
         print(f"  - Dashboard: http://localhost:{self.port}/")
         print(f"  - API Data: http://localhost:{self.port}/api/data")
+        print(f"  - AJAX Dashboard Data: http://localhost:{self.port}/api/dashboard-data")
         print(f"  - Cache Status: http://localhost:{self.port}/api/status")
         print(f"  - Force Refresh: POST to http://localhost:{self.port}/api/refresh")
         print("Press Ctrl+C to stop")
