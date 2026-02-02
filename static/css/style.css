@@ -122,34 +122,34 @@ main {
 .next-event {
     background: linear-gradient(135deg, rgba(0, 210, 190, 0.3) 0%, rgba(0, 150, 255, 0.2) 100%);
     border: 3px solid rgba(0, 210, 190, 0.7);
-    border-radius: 12px;
-    padding: 20px 16px;
+    border-radius: 8px;
+    padding: 12px 16px; /* Reduced from 20px */
     text-align: center;
     flex: 0 0 auto; /* Don't grow, but allow natural size */
     display: flex;
     flex-direction: column;
     justify-content: center;
     box-shadow: 0 0 25px rgba(0, 210, 190, 0.3);
-    margin-bottom: 20px;
+    margin-bottom: 8px; /* Reduced from 20px */
 }
 
 .next-event h2 {
-    font-size: 32px;
+    font-size: 26px; /* Reduced from 32px */
     font-weight: 700;
     color: #00D2BE;
-    margin-bottom: 8px;
+    margin-bottom: 4px; /* Reduced from 8px */
     text-shadow: 0 0 12px rgba(0, 210, 190, 0.6);
     letter-spacing: 1px;
 }
 
 /* Make the race name larger to better use horizontal space */
 .event-card h3 {
-    font-size: 64px;
+    font-size: 52px; /* Reduced from 64px */
     font-weight: 700;
     color: #ffffff;
-    margin-bottom: 8px;
+    margin-bottom: 4px; /* Reduced from 8px */
     text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
-    line-height: 0.9;
+    line-height: 0.85; /* Reduced from 0.9 for tighter spacing */
     letter-spacing: 1px;
 }
 
@@ -169,17 +169,17 @@ main {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 6px; /* Reduced from 12px */
 }
 
 /* THE DATE - Make this absolutely massive and the focal point */
 .event-date {
-    font-size: 78px !important;
+    font-size: 62px !important; /* Reduced from 78px */
     font-weight: 700;
     color: #FFD700;
     text-shadow: 0 0 20px rgba(255, 215, 0, 0.8), 0 0 40px rgba(255, 215, 0, 0.4);
-    letter-spacing: 3px;
-    margin: 10px 0;
+    letter-spacing: 2px; /* Reduced from 3px */
+    margin: 4px 0; /* Reduced from 10px 0 */
     background: linear-gradient(135deg, #FFD700 0%, #FFA500 50%, #FFD700 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -192,9 +192,9 @@ main {
 .event-secondary-info {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    gap: 10px; /* Reduced from 15px */
     width: 100%;
-    font-size: 32px; /* Increased from 24px since we have more space */
+    font-size: 28px; /* Reduced from 32px */
     font-weight: 600;
     order: 2;
 }
