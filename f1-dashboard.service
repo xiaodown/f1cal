@@ -8,7 +8,7 @@ Type=simple
 User=xiaodown
 Group=xiaodown
 WorkingDirectory=/home/xiaodown/code/f1cal
-ExecStart=/usr/bin/python3 /home/xiaodown/code/f1cal/app.py
+ExecStart=/home/xiaodown/code/f1cal/.venv/bin/python /home/xiaodown/code/f1cal/main.py
 Restart=always
 RestartSec=5
 Environment=PYTHONUNBUFFERED=1
