@@ -2,7 +2,7 @@
 
 A Formula 1 information dashboard optimized for Raspberry Pi displays, built with Python and FastF1. Perfect for showing next race information and championship standings on the official 5" Raspberry Pi Touch Display 2.
 
-This is still a work-in-progress.  A significant portion of it is vibe-coded, and I'm still working on testing it on the actual raspberry pi.o
+This is still a work-in-progress.  A significant portion of it is vibe-coded, and I'm still working on testing it on the actual raspberry pi.
 
 I used [this 3d printed case](https://www.printables.com/model/1532368-raspberry-pi-5-touch-display-2-case-with-stand) to hold everything, and it worked perfectly and looks great.  
 
