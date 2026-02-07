@@ -1,10 +1,12 @@
 # F1 Dashboard
 
-A Formula 1 information dashboard optimized for Raspberry Pi displays, built with Python and FastF1. Perfect for showing next race information and championship standings on a 3.5" touchscreen.
+A Formula 1 information dashboard optimized for Raspberry Pi displays, built with Python and FastF1. Perfect for showing next race information and championship standings on the official 5" Raspberry Pi Touch Display 2.
 
-This is still a work-in-progress.  A significant portion of it is vibe-coded, and I'm still working on testing it on the actual raspberry pi.
+This is still a work-in-progress.  A significant portion of it is vibe-coded, and I'm still working on testing it on the actual raspberry pi.o
 
-I am planning on using [this 3d printed case](https://www.printables.com/model/14035-raspberry-pi-4-adafruit-35-tft-case-with-fan) to hold the rpi and the adafruit 3.5" display.
+I used [this 3d printed case](https://www.printables.com/model/1532368-raspberry-pi-5-touch-display-2-case-with-stand) to hold everything, and it worked perfectly and looks great.  
+
+Built for the official [Raspberry Pi Touch Display 2](https://www.raspberrypi.com/products/touch-display-2/) which provides a crisp 5" touchscreen experience.
 
 ## 🏁 Features
 
@@ -23,19 +25,19 @@ I am planning on using [this 3d printed case](https://www.printables.com/model/1
 ### Technical Features
 - **Background Polling**: Automatically updates data every 12 hours
 - **Minimal Cache**: Optimized FastF1 integration (2MB vs 5GB+ typical usage)
-- **Raspberry Pi Optimized**: Designed for 3.5" touchscreens (480x320)
+- **Raspberry Pi Optimized**: Designed for the 5" Raspberry Pi Touch Display 2 (800x480)
 - **Fullscreen Support**: Toggle fullscreen with button or touch
 - **RESTful API**: JSON endpoints for data access
 - **Graceful Shutdown**: Proper cleanup on termination
 
 ## 🖥️ Display
 
-The dashboard is optimized for visibility from 6 feet away with:
+The dashboard is optimized for the 5" Touch Display 2 with visibility from 6 feet away:
 - Large, readable Rajdhani font
 - High contrast F1-themed color scheme
 - Medal-style gradients for podium positions
 - Static background (no distracting animations)
-- Responsive design for different screen sizes
+- Responsive design (800x480 optimized, works on other sizes)
 
 ## ⚡ Quick Start
 
@@ -68,20 +70,51 @@ The dashboard is optimized for visibility from 6 feet away with:
 
 ### Raspberry Pi Setup
 
-For optimal Raspberry Pi experience:
+For optimal Raspberry Pi experience with the 5" Touch Display 2:
 
-1. **Auto-start on boot** (add to `/etc/rc.local`):
+#### Auto-start System Setup
+
+The repository includes files for complete auto-start functionality:
+
+1. **Install the systemd service** for the Flask server:
    ```bash
-   cd /path/to/f1cal && python main.py --mode web &
+   # Copy and customize the service file
+   sudo cp f1-dashboard.service /etc/systemd/system/
+   
+   # Edit paths and username to match your setup
+   sudo nano /etc/systemd/system/f1-dashboard.service
+   
+   # Enable and start the service
+   sudo systemctl enable f1-dashboard.service
+   sudo systemctl start f1-dashboard.service
    ```
 
-2. **Configure display** for 3.5" touchscreen:
+2. **Setup auto-login** (optional but recommended):
    ```bash
-   # Add to /boot/config.txt
-   hdmi_group=2
-   hdmi_mode=87
-   hdmi_cvt=480 320 60 6 0 0 0
+   # Copy and customize the autologin configuration
+   sudo cp 50-autologin.conf /etc/lightdm/conf.d/
+   
+   # Edit username to match your system
+   sudo nano /etc/lightdm/conf.d/50-autologin.conf
    ```
+
+3. **Configure browser auto-start**:
+   ```bash
+   # Copy desktop file to autostart directory
+   mkdir -p ~/.config/autostart
+   cp autostart/f1-dashboard.desktop ~/.config/autostart/
+   # OR for Firefox:
+   cp autostart/f1-dashboard-firefox.desktop ~/.config/autostart/
+   ```
+
+**Important**: Update hardcoded paths in these files:
+- `f1-dashboard.service`: Update `/home/xiaodown/code/f1cal` paths
+- `50-autologin.conf`: Change `xiaodown` to your username
+- Desktop files work as-is (they use localhost)
+
+#### Display Configuration
+
+The 5" Touch Display 2 works out-of-the-box with modern Raspberry Pi OS. No additional configuration needed!
 
 ## 🔧 Configuration
 
@@ -191,20 +224,20 @@ f1cal/
 - POST to `/api/refresh` to force update
 
 **Display issues on Pi:**
-- Ensure display resolution is set correctly
+- The 5" Touch Display 2 should work out-of-the-box
 - Try fullscreen mode with the ⛶ button
 - Check `static/css/style.css` for responsive breakpoints
 
 ## 📱 Touch Screen Usage
 
-Optimized for touch interaction:
+Optimized for the 5" Touch Display 2:
 - **Tap fullscreen button**: Toggle fullscreen mode
 - **Tap standings area**: Reveal/hide spoiler-protected standings
-- **Responsive design**: Works on various screen sizes
+- **Responsive design**: 800x480 optimized, works on various screen sizes
 
 ## 🏆 Perfect For
 
-- **Raspberry Pi projects**: Optimized for 3.5" displays
+- **Raspberry Pi projects**: Optimized for the 5" Touch Display 2
 - **Home dashboards**: Always-on F1 information
 - **Race viewing**: Spoiler protection for delayed viewing
 - **F1 fans**: Comprehensive race and championship data
