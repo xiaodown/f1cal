@@ -15,6 +15,14 @@
 
         <main id="main-content">
             {% if next_event %}
+            <!-- Event Name Card -->
+            <section class="event-name-card" id="event-name-section">
+                <div class="event-name" id="event-name">{{ next_event.name }}</div>
+                {% if next_event.type %}
+                <div class="event-type" id="event-type">{{ next_event.type }}</div>
+                {% endif %}
+            </section>
+
             <!-- Date Hero Card -->
             <section class="date-card" id="date-card-section">
                 <div class="event-date" id="event-date">{{ next_event.date }}</div>
@@ -22,14 +30,6 @@
                     <div class="event-location" id="event-location">{{ next_event.location }}</div>
                     <div class="event-time" id="event-time">{{ next_event.time }}</div>
                 </div>
-            </section>
-
-            <!-- Event Name Card -->
-            <section class="event-name-card" id="event-name-section">
-                <div class="event-name" id="event-name">{{ next_event.name }}</div>
-                {% if next_event.type %}
-                <div class="event-type" id="event-type">{{ next_event.type }}</div>
-                {% endif %}
             </section>
             {% endif %}
 

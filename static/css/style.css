@@ -123,7 +123,8 @@ main {
     border-radius: 8px;
     padding: 10px 16px 12px;
     text-align: center;
-    flex: 0 0 auto;
+    flex: 1;
+    min-height: 0;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -133,10 +134,10 @@ main {
 }
 
 .event-date {
-    font-size: 110px;
+    font-size: 155px;
     font-weight: 700;
     color: #FFD700;
-    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 215, 0, 0.7);
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.8);
     letter-spacing: 4px;
     line-height: 1.0;
 }
@@ -172,27 +173,25 @@ main {
 
 /* ── Event Name Card ─────────────────────────────────── */
 .event-name-card {
-    background: linear-gradient(135deg, rgba(0, 210, 190, 0.2) 0%, rgba(0, 150, 255, 0.15) 100%);
-    border: 3px solid rgba(0, 210, 190, 0.7);
+    background: linear-gradient(135deg, rgba(0, 80, 80, 0.35) 0%, rgba(0, 60, 100, 0.25) 100%);
+    border: 2px solid rgba(0, 210, 190, 0.4);
     border-radius: 8px;
     padding: 10px 16px;
     text-align: center;
-    flex: 1;
-    min-height: 0;
+    flex: 0 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 4px;
-    box-shadow: 0 0 30px rgba(0, 210, 190, 0.3);
+    gap: 2px;
     overflow: hidden;
 }
 
 .event-name {
-    font-size: 72px;
+    font-size: 60px;
     font-weight: 700;
     color: #ffffff;
-    text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+    text-shadow: 0 0 15px rgba(255, 255, 255, 0.3);
     line-height: 1.0;
     letter-spacing: 1px;
     overflow: hidden;
@@ -202,10 +201,10 @@ main {
 }
 
 .event-type {
-    font-size: 64px;
+    font-size: 52px;
     color: #E20020;
     font-weight: 700;
-    text-shadow: 0 0 15px rgba(226, 0, 26, 0.8);
+    text-shadow: 0 0 12px rgba(226, 0, 26, 0.8);
     letter-spacing: 2px;
     line-height: 1.0;
 }
@@ -291,7 +290,7 @@ body:-moz-full-screen header h1 {
 body:fullscreen .event-date,
 body:-webkit-full-screen .event-date,
 body:-moz-full-screen .event-date {
-    font-size: 148px;
+    font-size: 190px;
     letter-spacing: 6px;
 }
 
@@ -304,13 +303,13 @@ body:-moz-full-screen .event-secondary-info {
 body:fullscreen .event-name,
 body:-webkit-full-screen .event-name,
 body:-moz-full-screen .event-name {
-    font-size: 76px;
+    font-size: 70px;
 }
 
 body:fullscreen .event-type,
 body:-webkit-full-screen .event-type,
 body:-moz-full-screen .event-type {
-    font-size: 66px;
+    font-size: 60px;
 }
 
 body:fullscreen .upcoming-name,
