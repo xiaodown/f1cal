@@ -5,108 +5,45 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F1 Dashboard</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-    <!-- No meta refresh - using AJAX instead -->
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Formula 1 Dashboard</h1>
+            <h1><span class="f1-red">Formula 1</span> <span class="f1-white">Events</span></h1>
             <button id="fullscreen-btn" class="fullscreen-button" title="Toggle Fullscreen">⛶</button>
         </header>
 
         <main id="main-content">
-            <!-- Next Event Section -->
             {% if next_event %}
-            <section class="next-event" id="next-event-section">
-                <h2>Next Event</h2>
-                <div class="event-card">
-                    <h3>
-                        <span id="event-name">{{ next_event.name }}</span>
-                        {% if next_event.type %}
-                        <span class="event-type-inline" id="event-type">{{ next_event.type }}</span>
-                        {% endif %}
-                    </h3>
-                    <div class="event-details">
-                        <div class="event-date" id="event-date">{{ next_event.date }}</div>
-                        <div class="event-secondary-info">
-                            <div class="event-location" id="event-location">{{ next_event.location }}</div>
-                            <div class="event-time" id="event-time">{{ next_event.time }}</div>
-                        </div>
-                    </div>
+            <!-- Date Hero Card -->
+            <section class="date-card" id="date-card-section">
+                <div class="event-date" id="event-date">{{ next_event.date }}</div>
+                <div class="event-secondary-info">
+                    <div class="event-location" id="event-location">{{ next_event.location }}</div>
+                    <div class="event-time" id="event-time">{{ next_event.time }}</div>
                 </div>
             </section>
-            {% endif %}
 
-            <!-- Standings Section -->
-            {% if standings and (standings.drivers or standings.constructors) %}
-            <section class="standings" id="standings-section">
-                <div class="spoiler-overlay" id="spoiler-overlay">
-                    <div class="spoiler-text">
-                        <span>🏁 Tap to reveal standings</span>
-                        <small>Spoiler protection active</small>
-                    </div>
-                </div>
-                <div class="standings-grid" id="standings-grid">
-                    <!-- Driver Standings -->
-                    {% if standings.drivers %}
-                    <div class="driver-standings">
-                        <h3>Driver Standings</h3>
-                        <div id="driver-standings-list">
-                            {% for driver in standings.drivers[:3] %}
-                            <div class="standing-item">
-                                <span class="position">{{ loop.index }}</span>
-                                <span class="name">{{ driver.name }}</span>
-                                <span class="points">{{ driver.points }}</span>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endif %}
-
-                    <!-- Constructor Standings -->
-                    {% if standings.constructors %}
-                    <div class="constructor-standings">
-                        <h3>Constructor Standings</h3>
-                        <div id="constructor-standings-list">
-                            {% for constructor in standings.constructors[:3] %}
-                            <div class="standing-item">
-                                <span class="position">{{ loop.index }}</span>
-                                <span class="name">{{ constructor.name }}</span>
-                                <span class="points">{{ constructor.points }}</span>
-                            </div>
-                            {% endfor %}
-                        </div>
-                    </div>
-                    {% endif %}
-                </div>
-                <!-- Hidden data for spoiler detection -->
-                <script type="application/json" id="standings-data">
-                    {
-                        "drivers": {{ standings.drivers[:3]|tojson|safe if standings.drivers else [] }},
-                        "constructors": {{ standings.constructors[:3]|tojson|safe if standings.constructors else [] }}
-                    }
-                </script>
-            </section>
-            {% else %}
-            <section class="standings no-data" id="standings-section">
-                No championship standings yet<br>
-                <small>Standings will appear after the first race</small>
+            <!-- Event Name Card -->
+            <section class="event-name-card" id="event-name-section">
+                <div class="event-name" id="event-name">{{ next_event.name }}</div>
+                {% if next_event.type %}
+                <div class="event-type" id="event-type">{{ next_event.type }}</div>
+                {% endif %}
             </section>
             {% endif %}
 
             <!-- Event After Next -->
             {% if event_after_next %}
             <section class="event-after-next" id="event-after-next-section">
-                <h2>Upcoming</h2>
-                <div class="event-card small">
-                    <h4 id="upcoming-event-name">{{ event_after_next.name }}</h4>
-                    <div class="event-details">
-                        <span id="upcoming-event-location">{{ event_after_next.location }}</span>
-                        <span id="upcoming-event-date">{{ event_after_next.date }}</span>
-                    </div>
+                <div class="upcoming-row">
+                    <div class="upcoming-label">Upcoming</div>
+                    <div class="upcoming-name" id="upcoming-event-name">{{ event_after_next.name }}</div>
+                    <div class="badge-teal" id="upcoming-event-location">{{ event_after_next.location }}</div>
+                    <div class="badge-gold" id="upcoming-event-date">{{ event_after_next.date }}</div>
                 </div>
                 <div class="last-updated-bottom">
-                    <strong>Last updated: {{ last_updated.strftime('%Y-%m-%d %H:%M:%S') if last_updated else 'Loading...' }}</strong>
+                    Last updated: {{ last_updated.strftime('%Y-%m-%d %H:%M:%S') if last_updated else 'Loading...' }}
                 </div>
             </section>
             {% endif %}
@@ -114,261 +51,77 @@
     </div>
 
     <script>
-        // Auto-refresh configuration - 30 minutes for F1 data
         const REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutes
         let refreshTimer;
 
-        // Fullscreen functionality
-        const fullscreenBtn = document.getElementById('fullscreen-btn');
-        
-        fullscreenBtn.addEventListener('click', function() {
+        // Fullscreen toggle
+        document.getElementById('fullscreen-btn').addEventListener('click', function() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().catch(err => {
-                    console.log('Error attempting to enable fullscreen:', err);
+                    console.log('Fullscreen error:', err);
                 });
             } else {
                 document.exitFullscreen();
             }
         });
-        
-        // Update button appearance based on fullscreen state
+
         document.addEventListener('fullscreenchange', function() {
             const btn = document.getElementById('fullscreen-btn');
             if (document.fullscreenElement) {
-                btn.innerHTML = '⛉'; // Exit fullscreen icon
+                btn.innerHTML = '⛉';
                 btn.title = 'Exit Fullscreen';
             } else {
-                btn.innerHTML = '⛶'; // Enter fullscreen icon
+                btn.innerHTML = '⛶';
                 btn.title = 'Toggle Fullscreen';
             }
         });
 
-        // AJAX content refresh function
+        // AJAX content refresh
         async function refreshContent() {
             try {
-                console.log('Refreshing content...');
                 const response = await fetch('/api/dashboard-data');
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
+                if (!response.ok) throw new Error('HTTP error! status: ' + response.status);
                 const data = await response.json();
                 updatePageContent(data);
-                
-                console.log('Content refreshed successfully');
-                
             } catch (error) {
                 console.error('Error refreshing content:', error);
-                // Could fall back to full page refresh here if needed
             }
         }
 
-        // Update page content with new data
         function updatePageContent(data) {
-            // Update last updated time
-            if (data.last_updated) {
-                const lastUpdatedElement = document.getElementById('last-updated-time');
-                if (lastUpdatedElement) {
-                    lastUpdatedElement.textContent = data.last_updated;
-                }
-            }
-
-            // Update next event
             if (data.next_event) {
-                const elements = {
+                const fields = {
                     'event-name': data.next_event.name,
                     'event-date': data.next_event.date,
                     'event-location': data.next_event.location,
-                    'event-time': data.next_event.time
+                    'event-time': data.next_event.time,
+                    'event-type': data.next_event.type
                 };
-                
-                for (const [id, value] of Object.entries(elements)) {
-                    const element = document.getElementById(id);
-                    if (element && value) {
-                        element.textContent = value;
-                    }
-                }
-                
-                // Handle event type separately since it might not exist
-                const eventTypeElement = document.getElementById('event-type');
-                if (eventTypeElement && data.next_event.type) {
-                    eventTypeElement.textContent = data.next_event.type;
+                for (const [id, value] of Object.entries(fields)) {
+                    const el = document.getElementById(id);
+                    if (el && value) el.textContent = value;
                 }
             }
-
-            // Update upcoming event
             if (data.event_after_next) {
-                const upcomingElements = {
+                const fields = {
                     'upcoming-event-name': data.event_after_next.name,
                     'upcoming-event-location': data.event_after_next.location,
                     'upcoming-event-date': data.event_after_next.date
                 };
-                
-                for (const [id, value] of Object.entries(upcomingElements)) {
-                    const element = document.getElementById(id);
-                    if (element && value) {
-                        element.textContent = value;
-                    }
+                for (const [id, value] of Object.entries(fields)) {
+                    const el = document.getElementById(id);
+                    if (el && value) el.textContent = value;
                 }
-            }
-
-            // Update standings if they exist
-            if (data.standings && (data.standings.drivers || data.standings.constructors)) {
-                updateStandings(data.standings);
             }
         }
 
-        // Update standings data
-        function updateStandings(standings) {
-            // Update driver standings
-            if (standings.drivers) {
-                const driversList = document.getElementById('driver-standings-list');
-                if (driversList) {
-                    driversList.innerHTML = '';
-                    standings.drivers.slice(0, 3).forEach((driver, index) => {
-                        const item = document.createElement('div');
-                        item.className = 'standing-item';
-                        item.innerHTML = `
-                            <span class="position">${index + 1}</span>
-                            <span class="name">${driver.name}</span>
-                            <span class="points">${driver.points}</span>
-                        `;
-                        driversList.appendChild(item);
-                    });
-                }
-            }
-
-            // Update constructor standings
-            if (standings.constructors) {
-                const constructorsList = document.getElementById('constructor-standings-list');
-                if (constructorsList) {
-                    constructorsList.innerHTML = '';
-                    standings.constructors.slice(0, 3).forEach((constructor, index) => {
-                        const item = document.createElement('div');
-                        item.className = 'standing-item';
-                        item.innerHTML = `
-                            <span class="position">${index + 1}</span>
-                            <span class="name">${constructor.name}</span>
-                            <span class="points">${constructor.points}</span>
-                        `;
-                        constructorsList.appendChild(item);
-                    });
-                }
-            }
-
-            // Update hidden standings data for spoiler detection
-            const standingsDataElement = document.getElementById('standings-data');
-            if (standingsDataElement) {
-                standingsDataElement.textContent = JSON.stringify({
-                    drivers: standings.drivers ? standings.drivers.slice(0, 3) : [],
-                    constructors: standings.constructors ? standings.constructors.slice(0, 3) : []
-                });
-                
-                // Re-initialize spoiler protection with new data
-                initSpoilerProtection();
-            }
-        }
-
-        // Start auto-refresh
         function startAutoRefresh() {
             refreshTimer = setInterval(refreshContent, REFRESH_INTERVAL);
-            console.log(`Auto-refresh started - will refresh every ${REFRESH_INTERVAL / 60000} minutes`);
         }
 
-        // Stop auto-refresh (useful for debugging)
-        function stopAutoRefresh() {
-            if (refreshTimer) {
-                clearInterval(refreshTimer);
-                console.log('Auto-refresh stopped');
-            }
-        }
-
-        // Spoiler protection for standings
-        function initSpoilerProtection() {
-            const standingsSection = document.getElementById('standings-section');
-            const spoilerOverlay = document.getElementById('spoiler-overlay');
-            const standingsDataElement = document.getElementById('standings-data');
-            
-            if (!standingsSection || !spoilerOverlay || !standingsDataElement) {
-                return; // No standings to protect
-            }
-
-            // Get current standings data
-            let currentStandingsData;
-            try {
-                currentStandingsData = JSON.parse(standingsDataElement.textContent);
-            } catch (e) {
-                console.log('No standings data found or invalid JSON');
-                return;
-            }
-            
-            const currentDataHash = btoa(JSON.stringify(currentStandingsData)).substring(0, 16);
-            
-            // Storage keys
-            const REVEALED_KEY = 'f1_standings_revealed';
-            const DATA_HASH_KEY = 'f1_standings_hash';
-            
-            // Check if standings have changed since last time
-            const storedHash = localStorage.getItem(DATA_HASH_KEY);
-            const wasRevealed = localStorage.getItem(REVEALED_KEY) === 'true';
-            
-            const standingsChanged = storedHash && storedHash !== currentDataHash;
-            
-            // If standings changed, blur again (reset revealed state)
-            if (standingsChanged) {
-                localStorage.setItem(REVEALED_KEY, 'false');
-                console.log('Standings changed - activating spoiler protection');
-            }
-            
-            // Update stored hash
-            localStorage.setItem(DATA_HASH_KEY, currentDataHash);
-            
-            // Determine if we should show spoiler overlay
-            const shouldBlur = !wasRevealed || standingsChanged;
-            
-            if (shouldBlur) {
-                spoilerOverlay.style.display = 'flex';
-                standingsSection.classList.add('blurred');
-            } else {
-                spoilerOverlay.style.display = 'none';
-                standingsSection.classList.remove('blurred');
-            }
-            
-            // Click handler to reveal standings
-            standingsSection.addEventListener('click', function(e) {
-                if (spoilerOverlay.style.display !== 'none') {
-                    // Reveal standings
-                    spoilerOverlay.style.display = 'none';
-                    standingsSection.classList.remove('blurred');
-                    localStorage.setItem(REVEALED_KEY, 'true');
-                    
-                    console.log('Standings revealed!');
-                }
-            });
-            
-            // Touch support for mobile/Pi touchscreen
-            standingsSection.addEventListener('touchend', function(e) {
-                e.preventDefault(); // Prevent double-firing with click
-                if (spoilerOverlay.style.display !== 'none') {
-                    spoilerOverlay.style.display = 'none';
-                    standingsSection.classList.remove('blurred');
-                    localStorage.setItem(REVEALED_KEY, 'true');
-                    
-                    console.log('Standings revealed via touch!');
-                }
-            });
-        }
-        
-        // Initialize everything when page loads
         document.addEventListener('DOMContentLoaded', function() {
-            initSpoilerProtection();
             startAutoRefresh();
-            
-            // Debug functions available in console
             window.refreshContent = refreshContent;
-            window.stopAutoRefresh = stopAutoRefresh;
-            window.startAutoRefresh = startAutoRefresh;
         });
     </script>
 </body>
