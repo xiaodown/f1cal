@@ -15,21 +15,21 @@
 
         <main id="main-content">
             {% if next_event %}
-            <!-- Event Name Card -->
-            <section class="event-name-card" id="event-name-section">
-                <div class="event-name" id="event-name">{{ next_event.name }}</div>
-                {% if next_event.type %}
-                <div class="event-type" id="event-type">{{ next_event.type }}</div>
-                {% endif %}
-            </section>
-
             <!-- Date Hero Card -->
             <section class="date-card" id="date-card-section">
                 <div class="event-date" id="event-date">{{ next_event.date }}</div>
                 <div class="event-secondary-info">
-                    <div class="event-location" id="event-location">{{ next_event.location }}</div>
-                    <div class="event-time" id="event-time">{{ next_event.time }}</div>
+                    <div class="event-name{% if not next_event.type %} event-name--full{% endif %}" id="event-name">{{ next_event.name }}</div>
+                    {% if next_event.type %}
+                    <div class="event-type" id="event-type">{{ next_event.type }}</div>
+                    {% endif %}
                 </div>
+            </section>
+
+            <!-- Location / Time Card -->
+            <section class="location-card" id="location-section">
+                <div class="event-location" id="event-location">{{ next_event.location }}</div>
+                <div class="event-time" id="event-time">{{ next_event.time }}</div>
             </section>
             {% endif %}
 
@@ -51,7 +51,7 @@
     </div>
 
     <script>
-        const REFRESH_INTERVAL = 30 * 60 * 1000; // 30 minutes
+        const REFRESH_INTERVAL = 5 * 60 * 1000; // 5 minutes
         let refreshTimer;
 
         // Fullscreen toggle

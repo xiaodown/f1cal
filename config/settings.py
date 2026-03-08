@@ -17,4 +17,4 @@ SHOW_EVENT_AFTER_NEXT = True
 # Polling interval 
 #  Update the cache this often
 #  Value in hours, integer
-POLL_INTERVAL_HOURS = 12
+POLL_INTERVAL_HOURS = 4

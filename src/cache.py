@@ -30,6 +30,11 @@ class F1DataCache:
         # Load existing cache
         self.load_cache()
         
+        # Kick off a fresh update in the background on every startup
+        startup_thread = threading.Thread(target=self.update_data, daemon=True)
+        startup_thread.start()
+        logger.info("Triggered startup data refresh")
+        
         # Start background polling thread
         self.polling_thread = threading.Thread(target=self._polling_loop, daemon=True)
         self.polling_thread.start()
