@@ -29,11 +29,16 @@ class WebDisplay(DisplayBase):
     
     def _setup_routes(self):
         """Setup Flask routes."""
+        @self.app.after_request
+        def add_no_cache_headers(response):
+            response.headers['Cache-Control'] = 'no-store, no-cache, must-revalidate, max-age=0'
+            response.headers['Pragma'] = 'no-cache'
+            response.headers['Expires'] = '0'
+            return response
+
         @self.app.route('/')
         def dashboard():
             dashboard_data = self.data_cache.get_data()
-            # Add last_updated timestamp for the template
-            dashboard_data['last_updated'] = datetime.now()
             return render_template('dashboard.html', **dashboard_data)
         
         @self.app.route('/api/data')
@@ -50,7 +55,9 @@ class WebDisplay(DisplayBase):
                 'next_event': data.get('next_event'),
                 'event_after_next': data.get('event_after_next'),
                 'standings': data.get('standings'),
-                'last_updated': datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+                'last_updated': data.get('last_updated').strftime('%Y-%m-%d %H:%M:%S')
+                if isinstance(data.get('last_updated'), datetime)
+                else data.get('last_updated')
             })
         
         @self.app.route('/api/status')

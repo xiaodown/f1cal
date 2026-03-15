@@ -23,7 +23,7 @@ Built for the official [Raspberry Pi Touch Display 2](https://www.raspberrypi.co
 - **Touch-Friendly**: Tap anywhere on standings to reveal
 
 ### Technical Features
-- **Background Polling**: Automatically updates data every 12 hours
+- **Background Polling**: Automatically updates data every 4 hours
 - **Minimal Cache**: Optimized FastF1 integration (2MB vs 5GB+ typical usage)
 - **Raspberry Pi Optimized**: Designed for the 5" Raspberry Pi Touch Display 2 (800x480)
 - **Fullscreen Support**: Toggle fullscreen with button or touch
@@ -129,7 +129,7 @@ REFRESH_INTERVAL = 300  # seconds (5 minutes)
 # Cache settings
 CACHE_ENABLED = True
 CACHE_DIRECTORY = "cache"
-POLL_INTERVAL_HOURS = 12
+POLL_INTERVAL_HOURS = 4
 
 # Display preferences
 SHOW_STANDINGS = True
@@ -146,7 +146,7 @@ python main.py [options]
 **Available options:**
 - `--mode {web,desktop}`: Display mode (default: web, desktop not implemented)
 - `--port PORT`: Web server port (default: 5000)
-- `--poll-hours HOURS`: Hours between data updates (default: 12)
+- `--poll-hours HOURS`: Hours between data updates (default: 4)
 - `--cache-file FILE`: Cache file location (default: dashboard_data.json)
 - `--force-update`: Force immediate data update on startup
 

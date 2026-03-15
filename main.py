@@ -3,9 +3,9 @@
 import sys
 import argparse
 import signal
-from datetime import datetime
 from src.cache import F1DataCache
 from src.display import WebDisplay, DesktopDisplay
+from config.settings import CACHE_FILE, POLL_INTERVAL_HOURS
 
 
 def signal_handler(signum, frame, data_cache):
@@ -22,10 +22,10 @@ def main():
                        help='Display mode (web or desktop)')
     parser.add_argument('--port', type=int, default=5000,
                        help='Port for web mode (default: 5000)')
-    parser.add_argument('--poll-hours', type=int, default=12,
-                       help='Hours between data polls (default: 12)')
-    parser.add_argument('--cache-file', default='dashboard_data.json',
-                       help='Cache file location (default: dashboard_data.json)')
+    parser.add_argument('--poll-hours', type=int, default=POLL_INTERVAL_HOURS,
+                       help=f'Hours between data polls (default: {POLL_INTERVAL_HOURS})')
+    parser.add_argument('--cache-file', default=CACHE_FILE,
+                       help=f'Cache file location (default: {CACHE_FILE})')
     parser.add_argument('--force-update', action='store_true',
                        help='Force immediate data update on startup')
     

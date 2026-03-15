@@ -85,37 +85,52 @@ class F1DataCache:
     def fetch_fresh_data(self) -> Dict[str, Any]:
         """Fetch fresh data from F1 APIs."""
         logger.info("Fetching fresh F1 data...")
-        
+        previous_data = self.cached_data.copy() if self.cached_data else {}
+        fetch_errors = []
+
+        logger.info("- Getting next event...")
         try:
-            # Add delays between API calls to be respectful
-            logger.info("- Getting next event...")
             next_event = self.data_fetcher.get_next_event()
-            
-            # Small delay between calls
-            time.sleep(2)
-            
-            logger.info("- Getting current standings...")
-            standings = self.data_fetcher.get_current_standings()
-            
-            time.sleep(2)
-            
-            logger.info("- Getting event after next...")
-            event_after_next = self.data_fetcher.get_event_after_next()
-            
-            data = {
-                'next_event': next_event,
-                'standings': standings,
-                'event_after_next': event_after_next,
-                'last_updated': datetime.now(),
-                'fetch_duration_minutes': None  # Will be calculated by caller
-            }
-            
-            logger.info("Fresh data fetched successfully")
-            return data
-            
         except Exception as e:
-            logger.error(f"Error fetching fresh data: {e}")
-            raise
+            logger.error(f"Error fetching next event: {e}")
+            next_event = previous_data.get('next_event')
+            fetch_errors.append('next_event')
+
+        time.sleep(2)
+
+        logger.info("- Getting current standings...")
+        try:
+            standings = self.data_fetcher.get_current_standings()
+        except Exception as e:
+            logger.error(f"Error fetching standings: {e}")
+            standings = previous_data.get('standings', {'drivers': [], 'constructors': []})
+            fetch_errors.append('standings')
+
+        time.sleep(2)
+
+        logger.info("- Getting event after next...")
+        try:
+            event_after_next = self.data_fetcher.get_event_after_next()
+        except Exception as e:
+            logger.error(f"Error fetching event after next: {e}")
+            event_after_next = previous_data.get('event_after_next')
+            fetch_errors.append('event_after_next')
+
+        data = {
+            'next_event': next_event,
+            'standings': standings,
+            'event_after_next': event_after_next,
+            'last_updated': datetime.now(),
+            'fetch_duration_minutes': None
+        }
+
+        if fetch_errors:
+            data['fetch_errors'] = fetch_errors
+            logger.warning(f"Fresh data fetched with partial failures: {', '.join(fetch_errors)}")
+        else:
+            logger.info("Fresh data fetched successfully")
+
+        return data
     
     def update_data(self) -> None:
         """Update cached data with fresh fetch."""

@@ -79,7 +79,7 @@
         // AJAX content refresh
         async function refreshContent() {
             try {
-                const response = await fetch('/api/dashboard-data');
+                const response = await fetch('/api/dashboard-data', { cache: 'no-store' });
                 if (!response.ok) throw new Error('HTTP error! status: ' + response.status);
                 const data = await response.json();
                 updatePageContent(data);
@@ -88,30 +88,52 @@
             }
         }
 
+        function setText(id, value) {
+            const el = document.getElementById(id);
+            if (!el) return;
+            el.textContent = value || '';
+        }
+
         function updatePageContent(data) {
+            const dateCard = document.getElementById('date-card-section');
+            const locationSection = document.getElementById('location-section');
+            const typeEl = document.getElementById('event-type');
+
             if (data.next_event) {
-                const fields = {
-                    'event-name': data.next_event.name,
-                    'event-date': data.next_event.date,
-                    'event-location': data.next_event.location,
-                    'event-time': data.next_event.time,
-                    'event-type': data.next_event.type
-                };
-                for (const [id, value] of Object.entries(fields)) {
-                    const el = document.getElementById(id);
-                    if (el && value) el.textContent = value;
+                if (dateCard) dateCard.style.display = '';
+                if (locationSection) locationSection.style.display = '';
+                setText('event-name', data.next_event.name);
+                setText('event-date', data.next_event.date);
+                setText('event-location', data.next_event.location);
+                setText('event-time', data.next_event.time);
+
+                if (typeEl) {
+                    if (data.next_event.type) {
+                        typeEl.textContent = data.next_event.type;
+                        typeEl.style.display = '';
+                    } else {
+                        typeEl.textContent = '';
+                        typeEl.style.display = 'none';
+                    }
                 }
+            } else {
+                if (dateCard) dateCard.style.display = 'none';
+                if (locationSection) locationSection.style.display = 'none';
             }
+
+            const upcomingSection = document.getElementById('event-after-next-section');
             if (data.event_after_next) {
-                const fields = {
-                    'upcoming-event-name': data.event_after_next.name,
-                    'upcoming-event-location': data.event_after_next.location,
-                    'upcoming-event-date': data.event_after_next.date
-                };
-                for (const [id, value] of Object.entries(fields)) {
-                    const el = document.getElementById(id);
-                    if (el && value) el.textContent = value;
-                }
+                if (upcomingSection) upcomingSection.style.display = '';
+                setText('upcoming-event-name', data.event_after_next.name);
+                setText('upcoming-event-location', data.event_after_next.location);
+                setText('upcoming-event-date', data.event_after_next.date);
+            } else if (upcomingSection) {
+                upcomingSection.style.display = 'none';
+            }
+
+            const lastUpdatedEls = document.getElementsByClassName('last-updated-bottom');
+            if (lastUpdatedEls.length && data.last_updated) {
+                lastUpdatedEls[0].textContent = `Last updated: ${data.last_updated}`;
             }
         }
 

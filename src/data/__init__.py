@@ -19,15 +19,19 @@ class F1DataFetcher:
         # Enable FastF1 cache for better performance
         fastf1.Cache.enable_cache(CACHE_DIRECTORY)
         
-        self.current_year = datetime.now().year
         # Get system timezone
         self.local_tz = datetime.now().astimezone().tzinfo
+
+    def _current_year(self) -> int:
+        """Get the current season year at call time."""
+        return datetime.now().year
     
     def get_next_event(self) -> Optional[Dict[str, Any]]:
         """Get information about the next F1 event."""
         try:
             # Get the schedule for current year
-            schedule = fastf1.get_event_schedule(self.current_year)
+            current_year = self._current_year()
+            schedule = fastf1.get_event_schedule(current_year)
             
             # Filter out testing events and keep only race events
             race_events = schedule[schedule['EventFormat'] != 'testing'].copy()
@@ -53,7 +57,7 @@ class F1DataFetcher:
             if upcoming_events.empty:
                 # Try next year if no events left this year
                 try:
-                    schedule = fastf1.get_event_schedule(self.current_year + 1)
+                    schedule = fastf1.get_event_schedule(current_year + 1)
                     race_events = schedule[schedule['EventFormat'] != 'testing'].copy()
                     
                     if not race_events.empty:
@@ -89,7 +93,7 @@ class F1DataFetcher:
                             'date': session_info['date'],
                             'time': session_info['time'],
                             'type': session_info['type'],
-                            'round': event['RoundNumber']
+                            'round': int(event['RoundNumber'])
                         }
             
             return next_event_info
@@ -149,7 +153,8 @@ class F1DataFetcher:
         """Get current driver and constructor standings."""
         try:
             # Only look at current year for standings
-            schedule = fastf1.get_event_schedule(self.current_year)
+            current_year = self._current_year()
+            schedule = fastf1.get_event_schedule(current_year)
             
             # Filter out testing events
             race_events = schedule[schedule['EventFormat'] != 'testing'].copy()
@@ -181,7 +186,7 @@ class F1DataFetcher:
             for _, race in completed_races.iterrows():
                 try:
                     print(f"  Loading results from {race['EventName']}...")
-                    session = fastf1.get_session(self.current_year, race['RoundNumber'], 'R')
+                    session = fastf1.get_session(current_year, race['RoundNumber'], 'R')
                     
                     # Only load results data - NOT full telemetry (this saves hundreds of MB per race)
                     session.load(laps=False, telemetry=False, weather=False, messages=False)
@@ -246,7 +251,8 @@ class F1DataFetcher:
         """Get information about the event after next."""
         try:
             # Get the schedule for current year
-            schedule = fastf1.get_event_schedule(self.current_year)
+            current_year = self._current_year()
+            schedule = fastf1.get_event_schedule(current_year)
             
             # Filter out testing events
             race_events = schedule[schedule['EventFormat'] != 'testing'].copy()
@@ -270,7 +276,7 @@ class F1DataFetcher:
             if len(upcoming_events) < 2:
                 # Try next year if not enough events left
                 try:
-                    next_year_schedule = fastf1.get_event_schedule(self.current_year + 1)
+                    next_year_schedule = fastf1.get_event_schedule(current_year + 1)
                     next_year_races = next_year_schedule[next_year_schedule['EventFormat'] != 'testing'].copy()
                     
                     if not next_year_races.empty:
@@ -302,7 +308,7 @@ class F1DataFetcher:
                 'name': event_after_next['EventName'],
                 'location': f"{event_after_next['Location']}, {event_after_next['Country']}",
                 'date': race_time_local.strftime('%Y-%m-%d'),
-                'round': event_after_next['RoundNumber']
+                'round': int(event_after_next['RoundNumber'])
             }
             
         except Exception as e:
